@@ -1,0 +1,19 @@
+package web.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import javax.servlet.http.HttpServletRequest;
+
+
+@Controller
+public class Cars {
+
+    @GetMapping("/cars")
+    public String loopCars (HttpServletRequest request, Model model) {
+        int count = Integer.parseInt(request.getParameter("count"));
+        String[] cars = new String[] {"car1", "car2", "car3", "car4", "car5"};
+        model.addAttribute("cars", cars[count]);
+        return "cars";
+    }
+}
