@@ -8,20 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.service.CarService;
 
-import java.util.ResourceBundle;
-
-@Controller
-@RequestMapping("/cars")
-public class CarController {
-
-    @GetMapping
-    public String getCars(@RequestParam(name = "locale", defaultValue = "en", required = false)String locale, ModelMap model){
-        model.addAttribute("cars", new CarService().getAllCars());
-        ResourceBundle bundle = ResourceBundle.getBundle("language_" + locale);
-        model.addAttribute("headline", bundle.getString("headline"));
+public class CarsController {
+    @GetMapping("/cars")
+    public String cars(@RequestParam(value = "count", defaultValue = "5") int allCars, Model model) {
+        List<Car> list = new ArrayList<>();
+        list.add(new Car("Tahoe Chevrolet", "White", 171));
+        list.add(new Car("Porsche Cayenne", "Black", 777));
+        list.add(new Car("Ferrari", "Red", 295));
+        list.add(new Car("Lamborghini Diablo", "Metallic", 497));
+        list.add(new Car("Aston Martin", "Blue", 538));
+        list = CarService.carsCount(list, allCars);
+        model.addAttribute("list", list);
         return "cars";
     }
 }
+
 
 
 
